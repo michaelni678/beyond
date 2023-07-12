@@ -1,0 +1,14 @@
+[package]
+name = "beyond_client"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "beyond_client"
+path = "src/main.rs"
+
+[lib]
+name = "beyond_client"
+path = "lib/lib.rs"
+
+[dependencies]
