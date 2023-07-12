@@ -1,0 +1,9 @@
+[workspace]
+
+members = [
+  # The main applications
+  "apps/*",
+
+  # The internal modules that the applications use
+  "modules/*",
+]

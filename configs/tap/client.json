@@ -1,0 +1,10 @@
+{
+  "in_dirs": ["apps/client/res/textures/test_samples"],
+  "in_exts": [".png", ".jpeg", ".jpg"],
+  "out_dir": "generated/tap",
+  "packer_config": {
+    "max_width": 4096,
+    "max_height": 4096,
+    "allow_rotation": true
+  }
+}
