@@ -7,14 +7,19 @@ pub fn init() -> Result<(), ClientError> {
   Ok(())
 }
 
-/// App close request event.
-pub fn close_request(elwt: &EventLoopWindowTarget<()>) -> Result<(), ClientError> {
-  // Set to exit.
-  elwt.exit();
+/// App exit event.
+pub fn exit() -> Result<(), ClientError> {
   Ok(())
 }
 
-/// App exit event.
-pub fn exit() -> Result<(), ClientError> {
+/// Frame event.
+pub fn frame() -> Result<(), ClientError> {
+  Ok(())
+}
+
+/// App close request event.
+pub fn close_request(elwt: &EventLoopWindowTarget<()>) -> Result<(), ClientError> {
+  // Exit event loop.
+  elwt.exit();
   Ok(())
 }

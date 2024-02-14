@@ -1,6 +1,6 @@
 use crate::{
   app::{
-    events::{close_request, exit, init},
+    events::{close_request, exit, frame, init},
     setup::window_builder,
   },
   errors::ClientError,
@@ -29,6 +29,8 @@ pub fn run_app(event_loop: EventLoop<()>) -> Result<(), ClientError> {
         Event::NewEvents(StartCause::Init) => init()?,
         // Application exit event.
         Event::LoopExiting => exit()?,
+        // Request the next frame.
+        Event::AboutToWait => window.request_redraw(),
         // Application window event.
         Event::WindowEvent { window_id, event } => {
           // Assert that the window ids are equivalent.
@@ -37,6 +39,8 @@ pub fn run_app(event_loop: EventLoop<()>) -> Result<(), ClientError> {
           match event {
             // Application close request event.
             WindowEvent::CloseRequested => close_request(elwt)?,
+            // Frame event.
+            WindowEvent::RedrawRequested => frame()?,
             // Ignore other window events.
             _ => (),
           }
