@@ -1,6 +1,6 @@
-use crate::errors::ClientError;
+use crate::net::error::NetError;
 
 /// Runs the net.
-pub async fn run_net() -> Result<(), ClientError> {
+pub async fn run_net() -> Result<(), NetError> {
   Ok(())
 }

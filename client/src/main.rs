@@ -1,9 +1,18 @@
-use crate::{app::run::run_app, errors::ClientError, net::run::run_net};
+// Disabled because I like having the redundant field names.
+#![allow(clippy::redundant_field_names)]
+
+use crate::{app::run::run_app, error::ClientError, net::run::run_net};
 use winit::event_loop::EventLoop;
 
 mod app;
-mod errors;
+mod cmd;
+mod ecs;
+mod error;
+mod gfx;
+mod math;
+mod misc;
 mod net;
+mod scene;
 
 #[tokio::main]
 async fn main() -> Result<(), ClientError> {
