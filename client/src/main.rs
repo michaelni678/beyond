@@ -1,8 +1,9 @@
-use crate::{app::run::run_app, errors::ClientError, net::run::run_net};
+use crate::{app::run::run_app, error::ClientError, net::run::run_net};
 use winit::event_loop::EventLoop;
 
 mod app;
-mod errors;
+mod error;
+mod gfx;
 mod net;
 
 #[tokio::main]
