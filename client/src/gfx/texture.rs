@@ -1,9 +1,9 @@
+use crate::gfx::error::GfxError;
 use ahash::AHashMap;
 use glium::{glutin::surface::WindowSurface, texture::RawImage2d, Display, Texture2d};
 use image::{ImageBuffer, ImageOutputFormat, Rgb};
 use rustc_hash::FxHashMap;
 use std::io::Cursor;
-use crate::gfx::error::GfxError;
 
 /// Manages textures.
 pub struct Textures {

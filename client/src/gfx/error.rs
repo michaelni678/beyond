@@ -1,4 +1,6 @@
-use glium::{index, texture::TextureCreationError, vertex, DrawError, ProgramCreationError, SwapBuffersError};
+use glium::{
+  index, texture::TextureCreationError, vertex, DrawError, ProgramCreationError, SwapBuffersError,
+};
 use image::ImageError;
 use thiserror::Error;
 

@@ -1,4 +1,7 @@
-use crate::{cmd::queue::CommandQueue, ecs::world::World, error::ClientError, gfx::renderer::Renderer, scene::scene::Scenes};
+use crate::{
+  cmd::queue::CommandQueue, ecs::world::World, error::ClientError, gfx::renderer::Renderer,
+  scene::scene::Scenes,
+};
 
 /// Defines a command.
 pub trait Command {
@@ -14,7 +17,13 @@ pub trait Command {
 
 /// Command variants.
 pub mod commands {
-  use crate::{cmd::{command::Command, queue::CommandQueue}, ecs::world::World, error::ClientError, gfx::renderer::Renderer, scene::scene::{Scene, Scenes}};
+  use crate::{
+    cmd::{command::Command, queue::CommandQueue},
+    ecs::world::World,
+    error::ClientError,
+    gfx::renderer::Renderer,
+    scene::scene::{Scene, Scenes},
+  };
 
   /// Load a scene.
   #[ghost::phantom]

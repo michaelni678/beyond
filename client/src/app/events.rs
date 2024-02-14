@@ -1,4 +1,11 @@
-use crate::{cmd::{command::commands::LoadScene, queue::CommandQueue}, ecs::world::World, error::ClientError, gfx::renderer::Renderer, include_wrt_manifest, scene::{scene::Scenes, scenes::game::GameScene}};
+use crate::{
+  cmd::{command::commands::LoadScene, queue::CommandQueue},
+  ecs::world::World,
+  error::ClientError,
+  gfx::renderer::Renderer,
+  include_wrt_manifest,
+  scene::{scene::Scenes, scenes::game::GameScene},
+};
 use winit::event_loop::EventLoopWindowTarget;
 
 /// App init event.

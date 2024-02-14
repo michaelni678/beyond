@@ -2,7 +2,11 @@ use crate::{
   app::{
     events::{close_request, exit, frame, init},
     setup::{scenes, window_builder},
-  }, cmd::queue::CommandQueue, ecs::world::World, error::ClientError, gfx::renderer::Renderer
+  },
+  cmd::queue::CommandQueue,
+  ecs::world::World,
+  error::ClientError,
+  gfx::renderer::Renderer,
 };
 use glium::backend::glutin::SimpleWindowBuilder;
 use winit::{
@@ -45,9 +49,13 @@ pub fn run_app(event_loop: EventLoop<()>) -> Result<(), ClientError> {
           // Handle application window events.
           match event {
             // Application close request event.
-            WindowEvent::CloseRequested => close_request(elwt, &mut command_queue, &mut renderer, &mut world)?,
+            WindowEvent::CloseRequested => {
+              close_request(elwt, &mut command_queue, &mut renderer, &mut world)?
+            },
             // Frame event.
-            WindowEvent::RedrawRequested => frame(&mut command_queue, &mut renderer, &mut scenes, &mut world)?,
+            WindowEvent::RedrawRequested => {
+              frame(&mut command_queue, &mut renderer, &mut scenes, &mut world)?
+            },
             // Ignore other window events.
             _ => (),
           }

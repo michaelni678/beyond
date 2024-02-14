@@ -1,20 +1,23 @@
+use crate::{
+  cmd::queue::CommandQueue, ecs::world::World, gfx::renderer::Renderer, misc::hash::TypeIdHasher,
+  scene::error::SceneError, ClientError,
+};
 use std::{any::TypeId, collections::HashMap, hash::BuildHasherDefault};
-use crate::{cmd::queue::CommandQueue, ecs::world::World, gfx::renderer::Renderer, misc::hash::TypeIdHasher, scene::error::SceneError, ClientError};
 
 /// Defines a scene.
 pub trait Scene: 'static {
   /// Invoked when the scene is loaded.
   fn load(
-    &mut self, 
+    &mut self,
     command_queue: &mut CommandQueue,
-    renderer: &mut Renderer, 
+    renderer: &mut Renderer,
     world: &mut World,
   ) -> Result<(), ClientError>;
   /// Invoked every frame.
   fn frame(
     &mut self,
     command_queue: &mut CommandQueue,
-    renderer: &mut Renderer, 
+    renderer: &mut Renderer,
     world: &mut World,
   ) -> Result<(), ClientError>;
   /// Invoked when the scene is unloaded.

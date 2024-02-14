@@ -1,5 +1,5 @@
-use hecs::{DynamicBundle, Entity, Query, QueryBorrow, QueryMut, QueryOne, QueryOneError};
 use crate::ecs::{actives::Actives, error::EcsError};
+use hecs::{DynamicBundle, Entity, Query, QueryBorrow, QueryMut, QueryOne, QueryOneError};
 
 /// Manages entities and their components.
 #[derive(Default)]

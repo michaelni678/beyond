@@ -1,4 +1,16 @@
-use crate::{ecs::{components::{Camera, Renderable, Transform}, world::World}, error::ClientError, gfx::{error::GfxError, pipeline::{GfxPipeline, GfxPipelineAttributes}, programs::Programs, texture::Textures}};
+use crate::{
+  ecs::{
+    components::{Camera, Renderable, Transform},
+    world::World,
+  },
+  error::ClientError,
+  gfx::{
+    error::GfxError,
+    pipeline::{GfxPipeline, GfxPipelineAttributes},
+    programs::Programs,
+    texture::Textures,
+  },
+};
 use glium::{glutin::surface::WindowSurface, Display, Surface};
 use rustc_hash::FxHashMap;
 
@@ -21,7 +33,7 @@ impl Renderer {
   pub fn new(display: Display<WindowSurface>) -> Result<Self, GfxError> {
     let textures = Textures::new(&display)?;
     let programs = Programs::new(&display)?;
-    Ok(Self { 
+    Ok(Self {
       display: display,
       pipelines: FxHashMap::default(),
       textures: textures,
@@ -65,7 +77,7 @@ impl Renderer {
         let texture_info = self.textures.get_texture_info(renderable.texture.get())?;
         // Determine the pipeline attributes required to render the renderable.
         let attrs = GfxPipelineAttributes::new(renderable.mesh.indices(), texture_info.sampler_id);
-        // Attempt to get a pipeline that matches the attributes. 
+        // Attempt to get a pipeline that matches the attributes.
         // If one doesn't exist, create a new valid pipeline.
         let pipeline = if let Some(pipeline) = self.pipelines.get_mut(&attrs) {
           pipeline

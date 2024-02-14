@@ -1,5 +1,8 @@
+use crate::{
+  cmd::command::Command, ecs::world::World, error::ClientError, gfx::renderer::Renderer,
+  scene::scene::Scenes,
+};
 use std::collections::VecDeque;
-use crate::{cmd::command::Command, ecs::world::World, error::ClientError, gfx::renderer::Renderer, scene::scene::Scenes};
 
 /// A queue of commands.
 #[derive(Default)]

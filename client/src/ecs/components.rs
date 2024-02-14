@@ -1,4 +1,7 @@
-use crate::{gfx::{color::Color, mesh::Mesh, texture::Texture}, math::{Matrix4, Point, Scale}};
+use crate::{
+  gfx::{color::Color, mesh::Mesh, texture::Texture},
+  math::{Matrix4, Point, Scale},
+};
 
 /// The position and scale of an entity.
 pub struct Transform {

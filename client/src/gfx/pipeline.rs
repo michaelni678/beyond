@@ -1,5 +1,17 @@
-use glium::{glutin::surface::WindowSurface, index::PrimitiveType, uniform, Blend, Display, DrawParameters, Frame, IndexBuffer, Surface, VertexBuffer};
-use crate::{gfx::{error::GfxError, mesh::Mesh, programs::Programs, texture::{TextureInfo, Textures}, vertex::Vertex}, math::{Point, Scale}};
+use crate::{
+  gfx::{
+    error::GfxError,
+    mesh::Mesh,
+    programs::Programs,
+    texture::{TextureInfo, Textures},
+    vertex::Vertex,
+  },
+  math::{Point, Scale},
+};
+use glium::{
+  glutin::surface::WindowSurface, index::PrimitiveType, uniform, Blend, Display, DrawParameters,
+  Frame, IndexBuffer, Surface, VertexBuffer,
+};
 
 /// The default flush threshold for a pipeline.
 const DEFAULT_FLUSH_THRESHOLD: usize = 64;
@@ -58,6 +70,7 @@ impl GfxPipeline {
     })
   }
   /// Write to the pipeline.
+  #[allow(clippy::too_many_arguments)]
   pub fn write(
     &mut self,
     frame: &mut Frame,

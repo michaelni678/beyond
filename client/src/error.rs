@@ -1,4 +1,6 @@
-use crate::{ecs::error::EcsError, gfx::error::GfxError, net::error::NetError, scene::error::SceneError};
+use crate::{
+  ecs::error::EcsError, gfx::error::GfxError, net::error::NetError, scene::error::SceneError,
+};
 use thiserror::Error;
 use tokio::task::JoinError;
 use winit::error::EventLoopError;

@@ -1,5 +1,5 @@
-use hecs::Entity;
 use crate::gfx::error::GfxError;
+use hecs::Entity;
 
 /// Active entities.
 #[derive(Default)]
