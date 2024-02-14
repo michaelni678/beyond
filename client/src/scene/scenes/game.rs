@@ -5,7 +5,9 @@ use crate::{
     world::World,
   },
   error::ClientError,
-  gfx::{color::Color, mesh::Mesh, renderer::Renderer, texture::Texture},
+  gfx::{
+    color::Color, mesh::RawMesh, renderer::Renderer, request::RenderRequest, texture::Texture,
+  },
   scene::scene::Scene,
 };
 
@@ -19,15 +21,15 @@ impl Scene for GameScene {
     _renderer: &mut Renderer,
     world: &mut World,
   ) -> Result<(), ClientError> {
-    // Spawn "me".
+    // Spawn "me" and set the active camera to it.
     let me = world.spawn_entity((
       Transform::new([0.0, 0.0], [128.0, 128.0]),
       Renderable::new(
         Color::none(),
         Texture::regular("Standalone"),
-        Mesh::square(),
+        RawMesh::square(),
       ),
-      Camera::new([64.0, 64.0]),
+      Camera::new([0.0, 0.0]),
     ));
     world.actives.set_camera(me);
     Ok(())
@@ -35,9 +37,22 @@ impl Scene for GameScene {
   fn frame(
     &mut self,
     _command_queue: &mut CommandQueue,
-    _renderer: &mut Renderer,
+    renderer: &mut Renderer,
     _world: &mut World,
   ) -> Result<(), ClientError> {
+    // Add oneshot render requests.
+    renderer.add_oneshot_request(RenderRequest::square(
+      [0.0, 128.0],
+      [128.0, 128.0],
+      Color::red(),
+      Texture::none(),
+    ));
+    renderer.add_oneshot_request(RenderRequest::circle16(
+      [128.0, 0.0],
+      [128.0, 128.0],
+      Color::blue(),
+    ));
+    renderer.add_oneshot_request(RenderRequest::point([-128.0, 0.0], Color::blue()));
     Ok(())
   }
   fn unload(

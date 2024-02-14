@@ -24,8 +24,8 @@ pub struct Renderer {
   pub textures: Textures,
   /// The program manager.
   programs: Programs,
-  /// Render requests.
-  render_requests: Vec<(Transform, Renderable)>,
+  /// Oneshot render requests.
+  oneshot_requests: Vec<(Transform, Renderable)>,
 }
 
 impl Renderer {
@@ -38,7 +38,7 @@ impl Renderer {
       pipelines: FxHashMap::default(),
       textures: textures,
       programs: programs,
-      render_requests: Vec::new(),
+      oneshot_requests: Vec::new(),
     })
   }
   /// Add a new sampler.
@@ -49,6 +49,10 @@ impl Renderer {
     info: impl IntoIterator<Item = (impl ToString, Vec<[f32; 2]>)>,
   ) -> Result<u16, GfxError> {
     self.textures.add_sampler(&self.display, bytes, info)
+  }
+  /// Add a new oneshot render request.
+  pub fn add_oneshot_request(&mut self, request: (Transform, Renderable)) {
+    self.oneshot_requests.push(request);
   }
   /// Execute the renderer.
   pub fn execute(&mut self, world: &mut World) -> Result<(), ClientError> {
@@ -70,8 +74,8 @@ impl Renderer {
         .standard_query::<(&Transform, &mut Renderable)>()
         .into_iter()
         .map(|(_, data)| data);
-      let requests = self.render_requests.iter_mut().map(|(t, r)| (&*t, r));
-      let chain = query.into_iter().chain(requests);
+      let oneshots = self.oneshot_requests.iter_mut().map(|(t, r)| (&*t, r));
+      let chain = query.into_iter().chain(oneshots);
       for (transform, renderable) in chain {
         // Get the texture information of the renderable.
         let texture_info = self.textures.get_texture_info(renderable.texture.get())?;

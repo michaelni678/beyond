@@ -99,7 +99,10 @@ impl GfxPipeline {
       // Write to the cached vertex.
       vertex.position = vertex_position.into();
       vertex.color = color;
-      vertex.texture_coord = texture_info.texture_coords[i];
+      // Only set the texture coord if valid.
+      if texture_info.texture_coords.len() > i {
+        vertex.texture_coord = texture_info.texture_coords[i];
+      }
     }
     self.len += 1;
     Ok(())

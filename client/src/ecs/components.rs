@@ -28,11 +28,11 @@ pub struct Renderable {
 
 impl Renderable {
   /// Create a new renderable component.
-  pub fn new(color: Color, texture: Texture, mesh: Mesh) -> Self {
+  pub fn new(color: Color, texture: Texture, mesh: impl Into<Mesh>) -> Self {
     Self {
       color: color,
       texture: texture,
-      mesh: mesh,
+      mesh: mesh.into(),
     }
   }
 }
