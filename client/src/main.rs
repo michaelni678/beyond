@@ -1,3 +1,4 @@
+#[allow(clippy::redundant_field_names)]
 use crate::{app::run::run_app, error::ClientError, net::run::run_net};
 use winit::event_loop::EventLoop;
 

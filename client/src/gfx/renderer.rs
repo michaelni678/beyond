@@ -1,5 +1,5 @@
-use glium::{glutin::surface::WindowSurface, Display, Surface};
 use crate::gfx::error::GfxError;
+use glium::{glutin::surface::WindowSurface, Display, Surface};
 
 /// Renders stuff to the display.
 pub struct Renderer {
@@ -10,9 +10,7 @@ pub struct Renderer {
 impl Renderer {
   /// Create a new renderer.
   pub fn new(display: Display<WindowSurface>) -> Self {
-    Self {
-      display: display,
-    }
+    Self { display: display }
   }
   /// Execute the renderer.
   pub fn execute(&mut self) -> Result<(), GfxError> {
@@ -20,9 +18,7 @@ impl Renderer {
     let mut frame = self.display.draw();
     frame.clear_color(0.0, 0.0, 0.0, 0.0);
     // Execute.
-    let result = (|| {
-      Ok(())
-    })();
+    let result = (|| Ok(()))();
     // Present and destroy the frame.
     frame.finish()?;
     // Return the execution results.

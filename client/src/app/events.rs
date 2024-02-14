@@ -1,5 +1,5 @@
-use winit::event_loop::EventLoopWindowTarget;
 use crate::{error::ClientError, gfx::renderer::Renderer};
+use winit::event_loop::EventLoopWindowTarget;
 
 /// App init event.
 pub fn init(_renderer: &mut Renderer) -> Result<(), ClientError> {
@@ -22,7 +22,7 @@ pub fn frame(renderer: &mut Renderer) -> Result<(), ClientError> {
 pub fn close_request(
   elwt: &EventLoopWindowTarget<()>,
   _renderer: &mut Renderer,
-  ) -> Result<(), ClientError> {
+) -> Result<(), ClientError> {
   // Exit event loop.
   elwt.exit();
   Ok(())

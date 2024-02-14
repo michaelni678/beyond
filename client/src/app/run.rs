@@ -3,7 +3,8 @@ use crate::{
     events::{close_request, exit, frame, init},
     setup::window_builder,
   },
-  error::ClientError, gfx::renderer::Renderer,
+  error::ClientError,
+  gfx::renderer::Renderer,
 };
 use glium::backend::glutin::SimpleWindowBuilder;
 use winit::{

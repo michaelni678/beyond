@@ -1,7 +1,7 @@
+use crate::{gfx::error::GfxError, net::error::NetError};
 use thiserror::Error;
 use tokio::task::JoinError;
 use winit::error::EventLoopError;
-use crate::{gfx::error::GfxError, net::error::NetError};
 
 #[derive(Error, Debug)]
 pub enum ClientError {
