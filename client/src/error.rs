@@ -1,4 +1,4 @@
-use crate::{gfx::error::GfxError, net::error::NetError};
+use crate::{gfx::error::GfxError, net::error::NetError, scene::error::SceneError};
 use thiserror::Error;
 use tokio::task::JoinError;
 use winit::error::EventLoopError;
@@ -11,6 +11,8 @@ pub enum ClientError {
   EventLoop(#[from] EventLoopError),
   #[error("{0}")]
   Gfx(#[from] GfxError),
+  #[error("{0}")]
+  Scene(#[from] SceneError),
   #[error("{0}")]
   Net(#[from] NetError),
 }
