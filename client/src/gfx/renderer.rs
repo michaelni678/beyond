@@ -1,4 +1,4 @@
-use crate::{ecs::{components::{Renderable, Transform}, world::World}, gfx::{error::GfxError, pipeline::{GfxPipeline, GfxPipelineAttributes}, texture::Textures}};
+use crate::{ecs::{components::{Camera, Renderable, Transform}, world::World}, error::ClientError, gfx::{error::GfxError, pipeline::{GfxPipeline, GfxPipelineAttributes}, programs::Programs, texture::Textures}};
 use glium::{glutin::surface::WindowSurface, Display, Surface};
 use rustc_hash::FxHashMap;
 
@@ -10,6 +10,8 @@ pub struct Renderer {
   pipelines: FxHashMap<GfxPipelineAttributes, GfxPipeline>,
   /// The texture manager.
   pub textures: Textures,
+  /// The program manager.
+  programs: Programs,
   /// Render requests.
   render_requests: Vec<(Transform, Renderable)>,
 }
@@ -18,10 +20,12 @@ impl Renderer {
   /// Create a new renderer.
   pub fn new(display: Display<WindowSurface>) -> Result<Self, GfxError> {
     let textures = Textures::new(&display)?;
+    let programs = Programs::new(&display)?;
     Ok(Self { 
       display: display,
       pipelines: FxHashMap::default(),
       textures: textures,
+      programs: programs,
       render_requests: Vec::new(),
     })
   }
@@ -35,12 +39,20 @@ impl Renderer {
     self.textures.add_sampler(&self.display, bytes, info)
   }
   /// Execute the renderer.
-  pub fn execute(&mut self, world: &mut World) -> Result<(), GfxError> {
+  pub fn execute(&mut self, world: &mut World) -> Result<(), ClientError> {
     // Get a frame and clear it.
     let mut frame = self.display.draw();
     frame.clear_color(0.0, 0.0, 0.0, 0.0);
     // Execute.
     let result = (|| {
+      // Get the projection matrix.
+      let projection = {
+        // Get the active camera and inspect.
+        let active_camera = world.actives.camera()?;
+        let (transform, camera) = world.standard_inspect::<(&Transform, &Camera)>(active_camera)?;
+        let fbd = self.display.get_framebuffer_dimensions();
+        camera.projection(fbd, transform.position)
+      };
       // Query the renderables.
       let query = world
         .standard_query::<(&Transform, &mut Renderable)>()
@@ -58,14 +70,30 @@ impl Renderer {
         let pipeline = if let Some(pipeline) = self.pipelines.get_mut(&attrs) {
           pipeline
         } else {
-          let pipeline = GfxPipeline::new()?;
+          let pipeline = GfxPipeline::new(&self.display, &attrs, None)?;
           self.pipelines.entry(attrs).or_insert(pipeline)
         };
+        // Write to the pipeline.
+        pipeline.write(
+          &mut frame,
+          &self.programs,
+          &self.textures,
+          &projection,
+          transform.position,
+          transform.scale,
+          renderable.color.into(),
+          texture_info,
+          &renderable.mesh,
+        )?;
+      }
+      // Loop through the pipelines, flushing them.
+      for pipeline in self.pipelines.values_mut() {
+        pipeline.flush(&mut frame, &self.programs, &self.textures, projection)?;
       }
       Ok(())
     })();
     // Present and destroy the frame.
-    frame.finish()?;
+    frame.finish().map_err(GfxError::from)?;
     // Return the execution results.
     result
   }

@@ -3,7 +3,6 @@ use glium::{glutin::surface::WindowSurface, texture::RawImage2d, Display, Textur
 use image::{ImageBuffer, ImageOutputFormat, Rgb};
 use rustc_hash::FxHashMap;
 use std::io::Cursor;
-
 use crate::gfx::error::GfxError;
 
 /// Manages textures.

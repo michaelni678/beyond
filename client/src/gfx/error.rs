@@ -1,4 +1,4 @@
-use glium::{texture::TextureCreationError, SwapBuffersError};
+use glium::{index, texture::TextureCreationError, vertex, DrawError, ProgramCreationError, SwapBuffersError};
 use image::ImageError;
 use thiserror::Error;
 
@@ -16,4 +16,14 @@ pub enum GfxError {
   SamplerNotFound(u16),
   #[error("No active camera to render with")]
   NoActiveCamera,
+  #[error("{0}")]
+  VBOCreation(#[from] vertex::BufferCreationError),
+  #[error("{0}")]
+  IBOCreation(#[from] index::BufferCreationError),
+  #[error("Failed to slice buffer")]
+  BufferSlice,
+  #[error("{0}")]
+  ProgramCreation(#[from] ProgramCreationError),
+  #[error("{0}")]
+  Draw(#[from] DrawError),
 }

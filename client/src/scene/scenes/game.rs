@@ -13,8 +13,8 @@ impl Scene for GameScene {
     // Spawn "me".
     let me = world.spawn_entity((
       Transform::new([0.0, 0.0], [128.0, 128.0]),
-      Renderable::new(Color::red(), Texture::none(), Mesh::square()),
-      Camera::new([0.0, 0.0]),
+      Renderable::new(Color::none(), Texture::regular("Standalone"), Mesh::square()),
+      Camera::new([64.0, 64.0]),
     ));
     world.actives.set_camera(me);
     Ok(())
