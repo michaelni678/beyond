@@ -19,6 +19,7 @@ impl World {
   }
   /// Query dynamically.
   #[inline]
+  #[allow(dead_code)]
   pub fn dynamic_query<Q: Query>(&self) -> QueryBorrow<'_, Q> {
     self.inner.query::<Q>()
   }
@@ -30,6 +31,7 @@ impl World {
   }
   /// Inspect a specific entity dynamically.
   #[inline]
+  #[allow(dead_code)]
   pub fn dynamic_inspect<Q: Query>(&self, entity: Entity) -> Result<QueryOne<'_, Q>, EcsError> {
     self
       .inner

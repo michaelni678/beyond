@@ -6,6 +6,7 @@ pub struct Flag<T> {
 
 impl<T> Flag<T> {
   /// Create a new flag. Initialized as dirty.
+  #[allow(dead_code)]
   pub fn new_dirty(value: T) -> Self {
     Self {
       value: value,
@@ -31,12 +32,14 @@ impl<T> Flag<T> {
   }
   /// Change the state of the flag clean.
   #[inline]
+  #[allow(dead_code)]
   pub fn clean(&mut self) {
     self.is_dirty = false;
   }
   /// Set the value of the flag.
   /// This automatically changes the flag to dirty.
   #[inline]
+  #[allow(dead_code)]
   pub fn set(&mut self, new_value: T) {
     self.value = new_value;
     self.is_dirty = true;

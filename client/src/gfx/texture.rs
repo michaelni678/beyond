@@ -106,6 +106,7 @@ impl Default for Texture {
 
 impl Texture {
   /// Create a new blank texture.
+  #[allow(dead_code)]
   pub fn none() -> Self {
     Self::default()
   }
